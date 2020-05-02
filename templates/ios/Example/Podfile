@@ -1,13 +1,28 @@
-use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 
 target '${POD_NAME}_Example' do
-  pod '${POD_NAME}', :path => '../'
+  
+
+  pod 'PPKit', :git =>'https://github.com/JxbSir/PPKit.git'
+	pod 'PPTask', :git =>'https://github.com/JxbSir/PPTask.git'
+	pod 'PPWidget', :git =>'https://github.com/JxbSir/PPWidget.git'
+  pod 'PPMVVMKit', :git =>'https://github.com/JxbSir/PPMVVMKit.git'
+
+
 
   target '${POD_NAME}_Tests' do
     inherit! :search_paths
 
-    ${INCLUDED_PODS}
+    ${INCLUDED_PODS} 
+  end
+
+end
+
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
   end
 end
