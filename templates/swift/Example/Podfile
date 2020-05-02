@@ -1,11 +1,47 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '10.0'
 use_frameworks!
 
 target '${POD_NAME}_Example' do
-  pod '${POD_NAME}', :path => '../'
+  
+	# reveal iOS UI 调试工具
+	pod 'Reveal-SDK',:git =>'https://github.com/JxbSir/Reveal-SDK-4.git', :configurations => ['Debug']
 
-  target '${POD_NAME}_Tests' do
-    inherit! :search_paths
 
-    ${INCLUDED_PODS}
+	pod 'SwiftKit', :git =>'https://github.com/JxbSir/SwiftKit.git', :subspecs => ['NetworkKit', 'MVVMKit', 'UtilsKit']
+
+    pod 'KVOController', :modular_headers => true
+    pod 'Alamofire', '~> 4.8.2'
+    pod 'ObjectMapper', '~> 3.4'
+    pod 'SDWebImage', :modular_headers => true
+
+    # HUD & Alert
+    pod 'MBProgressHUD', :modular_headers => true
+    pod 'SCLAlertView', :git => 'https://github.com/JxbSir/SCLAlertView-Swift.git', :branch => 'master'
+    
+    # 下拉刷新
+    pod 'MJRefresh', :modular_headers => true
+    pod 'IQKeyboardManager', :modular_headers => true
+
+    # 腾讯Bugly
+    pod 'Bugly'
+    
+    # 友盟
+    pod 'UMCCommon'
+    pod 'UMCAnalytics'
+
+	target '${POD_NAME}_Tests' do
+		inherit! :search_paths
+
+    	${INCLUDED_PODS}
+  	end
+
+end
+
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
   end
 end
